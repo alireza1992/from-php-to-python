@@ -1,13 +1,12 @@
 from typing import Annotated
-
 from fastapi import Depends
-from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
-engine= create_engine("mysql+mysqldb://skillcup:skillcup@db:3306/skillcup")
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 
-def get_db():
-    with Session(engine) as session:
+engine= create_async_engine("mysql+aiomysql://skillcup:skillcup@db:3306/skillcup")
+
+async def get_db():
+    async with AsyncSession(engine) as session:
          yield session
 
 # Type alias
-DbSession = Annotated[Session, Depends(get_db)]
+DbSession = Annotated[AsyncSession, Depends(get_db)]

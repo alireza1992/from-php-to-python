@@ -12,9 +12,9 @@ app = FastAPI()
 
 
 @app.get("/")
-def root(db: DbSession):
+async def root(db: DbSession):
 
-    result = db.execute(text("SELECT 2"))
+    result = await db.execute(text("SELECT 2"))
     logger.info(result.all())
 
     return {"message": "SkillCup API is running"}
