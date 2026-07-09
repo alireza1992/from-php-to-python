@@ -1,0 +1,29 @@
+# Environment
+.env
+.env.*
+!.env.example
+
+# Python
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Caches
+.pytest_cache
+.mypy_cache
+.ruff_cache
+
+# IDE
+.idea
+.vscode
+
+# Build
+*.egg-info
+dist/
+build/
+
+# Git
+.git
+.gitignore
