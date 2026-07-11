@@ -1,9 +1,10 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Form
 import logging
-
-
+from pydantic import BaseModel
 from Infrastructure.database import DbSession
 from sqlalchemy import text
+import jwt
+from config import Settings, settings
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -18,3 +19,13 @@ async def root(db: DbSession):
     logger.info(result.all())
 
     return {"message": "SkillCup API is running"}
+
+class UserIn(BaseModel):
+    username: str
+    password: str
+
+@app.post("/register")
+async def register(user:UserIn):
+    to_encode = {"sub": user.username}
+    token = jwt.encode(to_encode, settings.jwt_secret, algorithm="HS256")
+    return {"token":token }
