@@ -1,20 +1,19 @@
-from fastapi import FastAPI, Depends
-import logging
-
-
-from Infrastructure.database import DbSession
+from fastapi import FastAPI
+import logging.config
+from log_config import LOGGING_CONFIG
+from infrastructure.database import DbSession
 from sqlalchemy import text
 
-logging.basicConfig(level=logging.INFO)
+logging.config.dictConfig(LOGGING_CONFIG)
 logger = logging.getLogger(__name__)
-
 app = FastAPI()
 
 
-@app.get("/")
-async def root(db: DbSession):
-
-    result = await db.execute(text("SELECT 2"))
-    logger.info(result.all())
-
-    return {"message": "SkillCup API is running"}
+@app.get("/health")
+async def health_check(db: DbSession):
+    try:
+        await db.execute(text("SELECT 1"))
+        return {"status": "db is ok"}
+    except Exception as e:
+        logger.error(f"Health check failed: {e}")
+        return {"status": "error"}, 500
