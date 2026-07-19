@@ -1,0 +1,13 @@
+from enum import Enum
+
+
+class PlayerStatus(Enum):
+    ACTIVE = 1
+    INACTIVE = 2
+    NOT_VERIFIED = 3
+    DELETED_BY_USER = 0
+    TEMPORARY_DEACTIVATION = 4
+    PERMANENT_DEACTIVATION = 5
+    DEACTIVATED_BY_REDFLAG = 6
+    TEMPORARILY_DEACTIVATED_BY_USER = 7
+
