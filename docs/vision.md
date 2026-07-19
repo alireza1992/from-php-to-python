@@ -1,6 +1,6 @@
 # What is SkillCup.club?
 
-Its an online platform where e-sports players can match with other players and play the game (fc for now) and then
+It's an online platform where e-sports players can match with other players and play the game (fc for now) and then
 report the result. Platform will create a leaderboard out of all the games and there will be a tournament every two
 weeks between best 16 players.
 Winner of single elimination bracket will enjoy a sizable amount of cache.
