@@ -14,7 +14,7 @@ session_maker = async_sessionmaker(
     engine, class_=AsyncSession, expire_on_commit=False
 )
 async def get_db():
-    async with session_maker.begin() as session: # for auto-commit
+    async with session_maker() as session: # for auto-commit
         yield session
 
 

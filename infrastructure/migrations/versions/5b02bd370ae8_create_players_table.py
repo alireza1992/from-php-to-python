@@ -1,8 +1,8 @@
-"""create players and searches table
+"""Create players table
 
-Revision ID: fc4096c62ec2
+Revision ID: 5b02bd370ae8
 Revises: 
-Create Date: 2026-07-19 11:44:42.657048
+Create Date: 2026-07-26 10:09:10.259408
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
-revision: str = 'fc4096c62ec2'
+revision: str = '5b02bd370ae8'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -45,6 +45,7 @@ def upgrade() -> None:
     sa.Column('xp', sa.Integer(), nullable=True),
     sa.Column('is_fake', sa.Boolean(), nullable=True),
     sa.Column('is_admin', sa.Boolean(), nullable=True),
+    sa.Column('referrer_id', sa.Integer(), nullable=True),
     sa.Column('created_at', mysql.DATETIME(), server_default=sa.text('now()'), nullable=True),
     sa.Column('updated_at', mysql.DATETIME(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
@@ -66,8 +67,6 @@ def upgrade() -> None:
     op.create_index('ix_search_player_id', 'searches', ['player_id'], unique=False)
     op.create_index('ix_search_player_id_status', 'searches', ['player_id', 'status'], unique=False)
     # ### end Alembic commands ###
-    op.execute("ALTER TABLE players MODIFY updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP")
-    op.execute("ALTER TABLE searches MODIFY updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP")
 
 
 def downgrade() -> None:

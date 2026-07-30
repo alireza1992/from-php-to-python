@@ -9,7 +9,7 @@ ENV POETRY_VENV_IN_PROJECT=false \
 # --with dev for local development for poetry install
 RUN pip install poetry
 COPY pyproject.toml poetry.lock ./
-RUN poetry install --no-root --only main
+RUN poetry config virtualenvs.create false && poetry install --no-root
 COPY . .
 
 EXPOSE 8000
