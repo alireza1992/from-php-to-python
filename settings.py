@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic_settings import BaseSettings
 
 
@@ -8,6 +10,16 @@ class Settings(BaseSettings):
     db_password: str
     db_name: str
     jwt_secret: str
+    mail_username: str
+    mail_password: str
+    mail_from: str
+    mail_from_name: str
+    mail_port: int
+    mail_server: str
+    mail_starttls: bool
+    mail_ssl_tls: bool
+    singed_url_key: str
+    app_url: str
 
     @property
     def db_url(self):

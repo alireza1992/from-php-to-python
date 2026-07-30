@@ -1,6 +1,9 @@
 from datetime import datetime
 from typing import Optional
 from dataclasses import dataclass, field
+
+from pydantic import EmailStr
+
 from domain.player.enums.deactivation import DeactivationReason
 from domain.player.enums.status import PlayerStatus
 from domain.player.enums.xp import XP
@@ -10,11 +13,11 @@ from domain.shared.string_generator import StringGenerator
 @dataclass(eq=False, kw_only=True, slots=True)
 class Player:
     id: Optional[int] = None
-    email: str
+    email: str | EmailStr
     password_hash: str
+
     username: str= field(default_factory=StringGenerator.generate_random_string)
     status: PlayerStatus = PlayerStatus.NOT_VERIFIED
-
     is_fake: Optional[bool] = False
     is_admin: Optional[bool] = False
     name: Optional[str] = None
@@ -33,6 +36,7 @@ class Player:
     ea_id: Optional[str] = None
     deactivation_reason: Optional[DeactivationReason] = None
     xp: Optional[XP] = None
+    referrer_id: Optional[int] = None
 
     def __eq__(self, other: object) -> bool:
         return (

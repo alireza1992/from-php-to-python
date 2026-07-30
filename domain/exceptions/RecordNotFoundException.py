@@ -1,5 +1,9 @@
-class RecordNotFoundException(Exception):
-    def __init__(self, message: str="Record/Entity was not found", status_code = 404):
-        self.message = message # redundant but convenient still
-        self.status_code = status_code
-        super().__init__(self.message)
+from domain.exceptions.base import DomainException
+
+class RecordNotFoundException(DomainException):
+    def __init__(self, field:str):
+        super().__init__(
+            message = f"{field} ای یافت نشد",
+            status_code= 404,
+            errors= [f"هیچ رکوردی در دیتابیس وجود نداشت !"]
+        )

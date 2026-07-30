@@ -1,5 +1,5 @@
-from datetime import datetime
-from typing import List, Optional
+from datetime import datetime, timezone
+from typing import List
 
 from sqlalchemy import String, func, FetchedValue, Index
 from sqlalchemy.dialects.mysql import DATETIME
@@ -33,8 +33,9 @@ class Player(Base):
     xp: Mapped[int] = mapped_column(nullable=True)
     is_fake: Mapped[bool] = mapped_column(default=False, nullable=True)
     is_admin: Mapped[bool] = mapped_column(default=False, nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DATETIME, nullable=True, server_default=func.now())
-    updated_at: Mapped[datetime] = mapped_column(DATETIME, nullable=True, server_onupdate=FetchedValue())
+    referrer_id : Mapped[int] = mapped_column(nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DATETIME, nullable=True,default= lambda : datetime.now(timezone.utc), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DATETIME, nullable=True, server_onupdate=FetchedValue(), onupdate= datetime.now(timezone.utc))
 
     # (Composite) Indexes
     __table_args__ = (
@@ -50,9 +51,9 @@ class Player(Base):
     )
 
     # Relationships
-    chats: Mapped[List["Chat"]] = relationship(back_populates="player", cascade="all, delete-orphan")
-    rewards: Mapped[List["Reward"]] = relationship(back_populates="player", cascade="all, delete-orphan")
-    payments: Mapped[List["Payment"]] = relationship(back_populates="player", cascade="all, delete-orphan")
-    matches: Mapped[List["Match"]] = relationship(back_populates="player", cascade="all, delete-orphan")
-    credit: Mapped[Optional["Credit"]] = relationship(back_populates="player", cascade="all, delete-orphan", uselist=False)
+    # chats: Mapped[List["Chat"]] = relationship(back_populates="player", cascade="all, delete-orphan")
+    # rewards: Mapped[List["Reward"]] = relationship(back_populates="player", cascade="all, delete-orphan")
+    # payments: Mapped[List["Payment"]] = relationship(back_populates="player", cascade="all, delete-orphan")
+    # matches: Mapped[List["Match"]] = relationship(back_populates="player", cascade="all, delete-orphan")
+    # credit: Mapped[Optional["Credit"]] = relationship(back_populates="player", cascade="all, delete-orphan", uselist=False)
     searches: Mapped[List["Search"]] = relationship(back_populates="player", cascade="all, delete-orphan")
