@@ -1,19 +1,16 @@
 from datetime import datetime
 from typing import Optional
 from dataclasses import dataclass, field
-
-from pydantic import EmailStr
-
-from domain.player.enums.deactivation import DeactivationReason
-from domain.player.enums.status import PlayerStatus
-from domain.player.enums.xp import XP
+from domain.identity.enums.deactivation import DeactivationReason
+from domain.identity.enums.status import PlayerStatus
+from domain.identity.enums.xp import XP
 from domain.shared.string_generator import StringGenerator
 
 
 @dataclass(eq=False, kw_only=True, slots=True)
 class Player:
     id: Optional[int] = None
-    email: str | EmailStr
+    email: str
     password_hash: str
 
     username: str= field(default_factory=StringGenerator.generate_random_string)

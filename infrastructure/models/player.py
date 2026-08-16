@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from typing import List
+from typing import List, Optional
 
 from sqlalchemy import String, func, FetchedValue, Index
 from sqlalchemy.dialects.mysql import DATETIME
@@ -15,27 +15,27 @@ class Player(Base):
     password: Mapped[str] = mapped_column(String(255), nullable=False)
     username: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
     status: Mapped[int] = mapped_column(nullable=False)
-    name: Mapped[str] = mapped_column(String(255), nullable=True)
-    email_verified_at: Mapped[str] = mapped_column(DATETIME, nullable=True)
-    google_id: Mapped[str] = mapped_column(String(255), nullable=True)
-    referral_code: Mapped[str] = mapped_column(String(255), nullable=True)
-    phone_number: Mapped[str] = mapped_column(String(255), nullable=True)
-    avatar: Mapped[str] = mapped_column(String(255), nullable=True)
-    twitch_username: Mapped[str] = mapped_column(String(255), nullable=True)
-    youtube_username: Mapped[str] = mapped_column(String(255), nullable=True)
-    telegram_username: Mapped[str] = mapped_column(String(255), nullable=True)
-    instagram_username: Mapped[str] = mapped_column(String(255), nullable=True)
-    favourite_player: Mapped[str] = mapped_column(String(255), nullable=True)
-    favourite_team: Mapped[str] = mapped_column(String(255), nullable=True)
-    sheba: Mapped[str] = mapped_column(String(255), nullable=True)
-    ea_id: Mapped[str] = mapped_column(String(255), nullable=True)
-    deactivation_reason: Mapped[int] = mapped_column(nullable=True)
-    xp: Mapped[int] = mapped_column(nullable=True)
-    is_fake: Mapped[bool] = mapped_column(default=False, nullable=True)
-    is_admin: Mapped[bool] = mapped_column(default=False, nullable=True)
-    referrer_id : Mapped[int] = mapped_column(nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DATETIME, nullable=True,default= lambda : datetime.now(timezone.utc), server_default=func.now())
-    updated_at: Mapped[datetime] = mapped_column(DATETIME, nullable=True, server_onupdate=FetchedValue(), onupdate= datetime.now(timezone.utc))
+    name: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    email_verified_at: Mapped[Optional[datetime]] = mapped_column(DATETIME, nullable=True)
+    google_id: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    referral_code: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    phone_number: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    avatar: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    twitch_username: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    youtube_username: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    telegram_username: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    instagram_username: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    favourite_player: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    favourite_team: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    sheba: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    ea_id: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    deactivation_reason: Mapped[Optional[int]] = mapped_column(nullable=True)
+    xp: Mapped[Optional[int]] = mapped_column(nullable=True)
+    is_fake: Mapped[Optional[bool]] = mapped_column(default=False, nullable=True)
+    is_admin: Mapped[Optional[bool]] = mapped_column(default=False, nullable=True)
+    referrer_id : Mapped[Optional[int]] = mapped_column(nullable=True)
+    created_at: Mapped[Optional[datetime]] = mapped_column(DATETIME, nullable=True,default= lambda : datetime.now(timezone.utc), server_default=func.now())
+    updated_at: Mapped[Optional[datetime]] = mapped_column(DATETIME, nullable=True, server_onupdate=FetchedValue(), onupdate= datetime.now(timezone.utc))
 
     # (Composite) Indexes
     __table_args__ = (
