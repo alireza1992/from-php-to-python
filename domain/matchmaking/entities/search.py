@@ -1,6 +1,6 @@
 from typing import Optional
 from dataclasses import dataclass
-from domain.search.enums.status import SearchStatus
+from domain.matchmaking.enums.search_status import SearchStatus
 
 
 @dataclass(eq=False, kw_only=True, slots=True)

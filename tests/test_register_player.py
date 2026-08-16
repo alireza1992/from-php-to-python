@@ -46,7 +46,7 @@ sys.modules["jwt"] = jwt_stub
 
 from application.usecases import register_player
 from application.usecases.register_player import RegisterPlayer
-from domain.player.exceptions import UniqueConstraintException
+from domain.identity.exceptions import UniqueConstraintException
 from presentation.schemas.requests.register import RegisterValidation
 
 

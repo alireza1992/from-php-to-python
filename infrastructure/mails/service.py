@@ -9,7 +9,6 @@ from settings import settings
 class MailService:
 
     def __init__(self):
-
         self.config = ConnectionConfig(
             MAIL_USERNAME=settings.mail_username,
             MAIL_PASSWORD=settings.mail_password,
@@ -23,17 +22,16 @@ class MailService:
             MAIL_STARTTLS=settings.mail_starttls,
             MAIL_SSL_TLS=settings.mail_ssl_tls,
 
-            USE_CREDENTIALS=True,
+            USE_CREDENTIALS=False, #only for dev
 
-            VALIDATE_CERTS=True,
+            VALIDATE_CERTS=False, #only for dev
         )
 
     async def send_verification_email(
-        self,
-        email: str,
-        verification_url: str,
+            self,
+            email: str,
+            verification_url: str,
     ) -> None:
-
         html = f"""
         <h2>Welcome!</h2>
 
@@ -56,3 +54,26 @@ class MailService:
         fm = FastMail(self.config)
 
         await fm.send_message(message)
+
+    async def send_welcome_email(self, email: str, is_google_auth: bool = False) -> None:
+        html = f"""
+               <h2>Welcome to our site!</h2>
+
+               <p>
+                   It's time for you to shine!
+               </p>
+
+              
+               """
+
+        message = MessageSchema(
+            subject="Welcome to SkillCup!",
+            recipients=[email],
+            body=html,
+            subtype=MessageType.html,
+        )
+
+        fm = FastMail(self.config)
+
+        await fm.send_message(message)
+

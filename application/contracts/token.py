@@ -1,5 +1,5 @@
 from typing import Protocol
 
-class TokenService(Protocol):
+class TokenProtocol(Protocol):
     def issue(self, player_id: int):
         ...
