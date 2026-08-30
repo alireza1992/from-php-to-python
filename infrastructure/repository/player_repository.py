@@ -18,7 +18,7 @@ class PlayerRepository:
         )
         return query.scalar_one_or_none()
 
-    async def get_by_id(self, player_id: int):
+    async def get_by_id(self, player_id: int)->PlayerModel|None:
         query = await self.session.execute(
             select(PlayerModel).where(PlayerModel.id == player_id)
         )

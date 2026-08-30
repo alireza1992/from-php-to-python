@@ -21,7 +21,7 @@ class RegisterPlayer:
         self.url_maker = url_maker
 
     async def execute(self, payload: RegisterValidation):
-        hashed_password = PasswordHasher.hash(payload.password)  ## infra's concern - need contract here
+        hashed_password = PasswordHasher.hash(payload.password)  ## TODO: Infra's concern - need contract here
         entity_object = PlayerEntity(email=payload.email, password_hash=hashed_password)
         try:
             player = await self.repo.insert(entity_object)
@@ -43,5 +43,5 @@ class RegisterPlayer:
                                 player= PlayerResponse.model_validate(player),
                                 message="ثبت نام موفقیت آمیز بود."
                                 )
-        ## application is below presentation and does not know about presentation! wrong return , should be application respose .
+        ## TODO: Application is below presentation and does not know about presentation! wrong return , should be application response .
 

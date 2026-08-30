@@ -7,7 +7,7 @@ engine = create_async_engine(
     settings.db_url,
     pool_size=5,
     max_overflow=10,
-    echo=True,
+    echo=False,
 )
 
 session_maker = async_sessionmaker(

@@ -3,7 +3,7 @@ from typing import Optional
 from sqlalchemy import ForeignKey, func, FetchedValue, Index
 from sqlalchemy.dialects.mysql import DATETIME
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from domain.matchmaking.enums.status import SearchStatus
+from domain.matchmaking.enums.search_status import SearchStatus
 from infrastructure.models.base import Base
 
 

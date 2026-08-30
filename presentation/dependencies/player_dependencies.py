@@ -1,11 +1,14 @@
 from fastapi import Depends
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from application.contracts.email import EmailProtocol
+from application.contracts.player import PlayerProtocol
 from application.contracts.token import TokenProtocol
 from application.usecases.register_player import RegisterPlayer
 from application.usecases.verify_player import PlayerEmailVerification
 from domain.identity.services.email_verification import VerifyPlayer as VerifyPlayerService
 from infrastructure.auth.token_service import JWTTokenService
+from infrastructure.database import get_db
 from infrastructure.notifications.celery_email_service import CeleryEmailService
 from infrastructure.repository.player_repository import PlayerRepository
 from infrastructure.security.singed_url import SignedUrl
@@ -22,12 +25,17 @@ def get_token_service() -> JWTTokenService:
 def get_singed_url_service() -> SignedUrl:
     return SignedUrl()
 
-def get_player_repository() -> PlayerRepository:
-    return PlayerRepository()
+
+def get_player_repository(
+    session: AsyncSession = Depends(get_db),
+) -> PlayerProtocol:
+    return PlayerRepository(session)
 
 
-def get_verify_player_service(url_service: SignedUrl = Depends(SignedUrl),player_repository: PlayerRepository = Depends(PlayerRepository) ) -> VerifyPlayerService:
+def get_verify_player_service(url_service: SignedUrl = Depends(SignedUrl),
+                              player_repository: PlayerRepository = Depends(get_player_repository)) -> VerifyPlayerService:
     return VerifyPlayerService(url_service, player_repository)
+
 
 def get_register_use_case(
         player_repository: PlayerRepository = Depends(PlayerRepository),

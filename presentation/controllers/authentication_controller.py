@@ -16,7 +16,6 @@ async def register(payload: RegisterValidation, use_case: RegisterPlayer = Depen
     result = await use_case.execute(payload)
     return result
 
-
 @router.get('/verify-email/{player_id}/{hashed_email}')
 async def verify_email(
         player_id: Annotated[int, Path(title="Id of the player to be verified", gt=0)],
@@ -26,3 +25,5 @@ async def verify_email(
         use_case: PlayerEmailVerification = Depends(get_player_verify_use_case)
 ):
     return await use_case.execute(player_id, hashed_email, expires, signature)
+
+# TODO: login needs to be implemented
